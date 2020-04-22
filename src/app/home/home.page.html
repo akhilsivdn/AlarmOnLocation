@@ -1,20 +1,23 @@
-<ion-header [translucent]="true">
+
+  <ion-header>
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+      <ion-toolbar color="primary">
+          <ion-searchbar [(ngModel)]="autocomplete.input"
+          (ionInput)="updateSearchResults()" placeholder="Search for a place"></ion-searchbar>
+          <ion-list [hidden]="autocompleteItems.length == 0">
+             <ion-item *ngFor="let item of autocompleteItems" tappable (click)="selectSearchResult(item)">
+               {{ item.description }}
+             </ion-item>
+           </ion-list>
+           </ion-toolbar>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+<ion-content *ngIf="navigationStarted">
+    <ion-item>Destination: {{this.autocomplete.input}}</ion-item>
+    <ion-item>Approximate distance: {{this.distance}} km.</ion-item>
+    <ion-button *ngIf="audioStarted" shape="round" (click)="stopAudio()" color="primary">
+      Stop Alarm
+    </ion-button>
 </ion-content>
+
